@@ -1,7 +1,11 @@
 streamlit
-numpy
-librosa
+numpy<2
+librosa==0.10.1
 joblib
-torch
 transformers
+torch
 soundfile
+audioread
+scikit-learn
+sentencepiece
+protobuf
