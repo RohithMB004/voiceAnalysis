@@ -1,22 +1,30 @@
 # 🗣️ Native Language Identification of Indian English Speakers Using HuBERT & MFCCs
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
-![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?logo=pytorch&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-%23FF4B4B.svg?logo=streamlit&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?logo=pytorch\&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-%23FF4B4B.svg?logo=streamlit\&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen.svg)
 
+---
+
+## 📌 Project Links
+
+🔗 **GitHub Repository:**
+[https://github.com/RohithMB004/voiceAnalysis](https://github.com/RohithMB004/voiceAnalysis)
+
+🔗 **Live Streamlit Demo (Accent-to-Cuisine Recommender):**
+[https://rohithmb004-voiceanalysis-app-j4gnxo.streamlit.app/](https://rohithmb004-voiceanalysis-app-j4gnxo.streamlit.app/)
+
+---
 
 ## 🎯 Objective
 
-This project aims to classify the **native language (L1)** of Indian speakers by analyzing the way they speak **English**. Since Indian languages influence English pronunciation differently—Malayalam-English, Tamil-English, Kannada-English, Gujarati-English, etc.—accent patterns can be used to automatically predict the speaker’s linguistic background.
+This project aims to classify the **native language (L1)** of Indian speakers by analyzing their **English accent patterns**.
+Indian English varies significantly across regions (Malayalam-English, Tamil-English, Kannada-English, Gujarati-English, etc.).
+By using **MFCC features** and **HuBERT embeddings**, this project identifies the speaker’s likely linguistic background.
 
-The project uses two major approaches:
-
-* 🎵 **MFCC-based acoustic features** (traditional audio processing)
-* 🧠 **HuBERT-based deep speech embeddings** (self-supervised learning)
-
-We evaluate the performance of both approaches and deploy the HuBERT-based model in a real-world application: a fun **Accent-Aware Cuisine Recommender** that suggests regional foods based on a user’s accent.
+We also built a real-time **Accent-Aware Cuisine Recommender**, which listens to a user’s accent and suggests dishes from their region.
 
 ---
 
@@ -28,166 +36,182 @@ We evaluate the performance of both approaches and deploy the HuBERT-based model
 
 ---
 
-## 📦 Dataset
+## 📂 Folder Structure
 
-The project uses the **IndicAccentDb** dataset from Hugging Face, which includes recordings of Indian speakers from different native-language backgrounds.
+```
+voiceAnalysis/
+│── app.py                          # Streamlit Application
+│── hubert_accent_model_full.pkl    # Trained HuBERT Accent Classifier
+│── meow.ipynb                      # HuBERT Layer-wise Analysis Notebook
+│── requirements.txt                # Python dependencies
+│── train_mfcc.py                   # MFCC-Based Classifier
+│── README.md                       # Documentation
+└── .gitignore                      # Files to ignore in Git
+```
 
-📌 **Dataset Link:**
+---
+
+## 🗂️ Dataset
+
+We use **IndicAccentDb** from Hugging Face:
 [https://huggingface.co/datasets/DarshanaS/IndicAccentDb](https://huggingface.co/datasets/DarshanaS/IndicAccentDb)
 
-Each audio file is labeled with one of the following L1 categories:
+Labels included:
 
-| Label | Native Language / Region |
-| ----- | ------------------------ |
-| 0     | Andhra Pradesh           |
-| 1     | Gujarat                  |
-| 2     | Jharkhand / Hindi        |
-| 3     | Karnataka                |
-| 4     | Kerala                   |
-| 5     | Tamil Nadu               |
-
-Your Streamlit app uses 6 classes, and the MFCC training script uses 5 (based on dataset split).
+| ID | Language / Region |
+| -- | ----------------- |
+| 0  | Andhra Pradesh    |
+| 1  | Gujarat           |
+| 2  | Hindi / Jharkhand |
+| 3  | Karnataka         |
+| 4  | Kerala            |
+| 5  | Tamil Nadu        |
 
 ---
 
-## ⚙️ Project Components
+## 🛠️ Installation & Requirements
 
-### **1️⃣ MFCC Feature-Based Model**
+### ▶️ 1. Create a virtual environment
 
-Your script `train_mfcc.py` extracts:
+```bash
+python -m venv venv
+venv\Scripts\activate        # Windows
+# OR
+source venv/bin/activate     # Mac/Linux
+```
 
-* 13-dimensional MFCC features
-* Mean-pooled vectors for fixed-length embeddings
-* Trains an SVM classifier (RBF kernel)
-* Standard scaling applied before classification
+### ▶️ 2. Install dependencies
 
-✔ Demonstrates the performance of traditional handcrafted features
-✔ Simple and efficient baseline model
+```bash
+pip install -r requirements.txt
+```
 
----
-
-### **2️⃣ HuBERT Deep Embedding Model**
-
-Using the file `hubert_accent_model_full.pkl`, the app loads:
-
-* ⚡ **HuBERT-base (facebook/hubert-base-ls960)**
-* Extracts contextual speech embeddings
-* Mean pooling of last hidden layer
-* Feeding scaled embeddings into an ML classifier
-* Produces region predictions with high confidence
-
-🎯 HuBERT captures deeper phonetic cues → better accent recognition.
-
----
-
-### **3️⃣ Accent-Aware Cuisine Recommender App (Streamlit)**
-
-File: `app.py`
-
-The UI allows users to:
-
-1. Upload or record a short English audio clip (WAV/MP3)
-2. System extracts HuBERT embeddings
-3. Machine learning classifier predicts native accent
-4. A cuisine from that region is recommended
-
-#### Example Output:
-
-| Detected Accent | Region            | Suggested Dishes            |
-| --------------- | ----------------- | --------------------------- |
-| Kerala          | Malayalam-English | Appam, Puttu, Karimeen Fry  |
-| Karnataka       | Kannada-English   | Bisi Bele Bath, Mysore Dosa |
-| Andhra Pradesh  | Telugu-English    | Gongura Pachadi             |
-
-This makes the system intuitive, fun, and culturally relevant.
-
----
-
-## 🧠 Technical Workflow
-
-### **1. Feature Extraction**
-
-#### MFCC Pipeline:
-
-* Load → Resample → Compute MFCC → Mean Aggregation
-
-#### HuBERT Pipeline:
-
-* Raw audio → Wav2Vec2FeatureExtractor → HuBERT Model → Embedding → Scaling
-
----
-
-### **2. Classification Models**
-
-| Feature | Model               | Notes                              |
-| ------- | ------------------- | ---------------------------------- |
-| MFCC    | SVM                 | Good baseline, interpretable       |
-| HuBERT  | SVM / ML classifier | More accurate due to deep features |
-
----
-
-### **3. Deployment**
-
-The Streamlit UI (`app.py`):
-
-* Uses cached loading for faster execution
-* Real-time audio processing
-* Recommends region-specific dishes
-
----
-
-## 📊 Results Summary
-
-| Experiment        | Approach          | Accuracy         | Insights                              |
-| ----------------- | ----------------- | ---------------- | ------------------------------------- |
-| MFCC Model        | SVM               | ~90–95% (approx) | MFCC captures basic phonetic features |
-| HuBERT Embeddings | ML classifier     | ~98–99%          | Better accent discrimination          |
-| Streamlit App     | Real-time testing | High reliability | Good real-world performance           |
-
----
-
-## 🛠️ Tech Stack
-
-| Category         | Tools                       |
-| ---------------- | --------------------------- |
-| ML Framework     | PyTorch, scikit-learn       |
-| Audio Processing | Librosa, HuBERT             |
-| Deployment       | Streamlit                   |
-| Data             | IndicAccentDb               |
-| Others           | NumPy, Transformers, Joblib |
-
----
-
-## 🚀 Future Enhancements
-
-* Expand to 10+ Indian languages
-* Add direct speech recording instead of upload
-* Improve cross-age performance (adult → child generalization)
-* Deploy on cloud with GPU inference
-
----
-
-## 📁 Repository Structure
+Contents of `requirements.txt`:
 
 ```
-project/
-│── app.py                       # Streamlit frontend
-│── train_mfcc.py                # MFCC training code
-│── hubert_accent_model_full.pkl # Trained HuBERT model
-│── README.md                    # Project documentation
-│── data/                        # Audio samples (optional)
+streamlit
+numpy
+joblib
+librosa
+soundfile
+torch
+torchaudio
+transformers
+sentencepiece
+datasets
+scikit-learn
 ```
 
 ---
 
-## 📜 License
-
-This project is released under the **MIT License**.
+# 🚀 How to Run Each Component
 
 ---
 
-## 🎉 Acknowledgment
+## ▶️ 1. Run the Streamlit Application (Accent-to-Cuisine System)
 
-This project was developed as part of an academic exploration into speech processing, machine learning, and regional accent modeling in India.
+This is your **main user-facing application**.
+
+### Step 1: Ensure the model file is present
+
+`hubert_accent_model_full.pkl` must be in the **same folder** as `app.py`.
+
+### Step 2: Run Streamlit
+
+```bash
+streamlit run app.py
+```
+
+### Step 3: Use the App
+
+* Upload a **WAV/MP3** file
+* The system extracts HuBERT embeddings
+* Predicts the speaker’s **native accent**
+* Shows **regional cuisine recommendations**
+
+---
+
+## ▶️ 2. Train the MFCC-Based Accent Classifier
+
+Script: `train_mfcc.py`
+
+### Run:
+
+```bash
+python train_mfcc.py
+```
+
+This script:
+
+✔ Loads dataset
+✔ Extracts MFCCs (13 coefficients)
+✔ Mean-pools features
+✔ Trains an SVM classifier
+✔ Prints accuracy
+✔ Generates **real MFCC confusion matrix** and **learning curve** if you added my code
+
+Outputs saved:
+
+* `mfcc_confusion_matrix_real.png`
+* `mfcc_learning_curve_real.png`
+
+---
+
+## ▶️ 3. Run HuBERT Layer-wise Model (12-Layer Analysis)
+
+Notebook: `meow.ipynb`
+
+This notebook performs:
+
+1. Load 1000 samples (shuffled)
+2. Extract **all 12 HuBERT transformer layers**
+3. Train **12 SVM classifiers** (one per layer)
+4. Plot **layer-wise accuracy graph**
+5. Find **best-performing layer**
+6. Generate:
+
+   * Real confusion matrix
+   * Real classification report
+
+Saved outputs:
+
+* `hubert_layer_wise_accuracy.png`
+* `hubert_confusion_matrix_real.png`
+
+Highest accuracy in your results = **Layer 2 (96.5%)**
+
+---
+
+# 📊 Results Summary
+
+| Model         | Approach         | Accuracy         | Notes                         |
+| ------------- | ---------------- | ---------------- | ----------------------------- |
+| MFCC-SVM      | Classic features | **90–95%**       | Good baseline                 |
+| HuBERT-SVM    | Deep embeddings  | **96–97%**       | Captures accent patterns best |
+| Streamlit App | Real-time        | High reliability | Smooth inference              |
+
+---
+
+# 🔮 Future Work
+
+* Scale to **10+ Indian languages**
+* Add **live audio recording**
+* Explore **Wav2Vec2 / XLSR** embeddings
+* Deploy with **GPU acceleration**
+* Improve robustness across **children vs adults**
+
+---
+
+# 📜 License
+
+MIT License — free for education, research, and personal use.
+
+---
+
+# 🎉 Acknowledgment
+
+Thanks to **IndicAccentDb creators**, 🤗 **HuggingFace**, and **Facebook AI (HuBERT)**.
+
+This project was created as part of the academic course on speech analytics and machine learning.
 
 ---
