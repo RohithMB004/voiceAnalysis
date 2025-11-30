@@ -10,11 +10,11 @@
 
 ## 📌 Project Links
 
-🔗 **GitHub Repository:**
-[https://github.com/RohithMB004/voiceAnalysis](https://github.com/RohithMB004/voiceAnalysis)
+🔗 GitHub Repository
+https://github.com/RohithMB004/voiceAnalysis
 
-🔗 **Live Streamlit Demo (Accent-to-Cuisine Recommender):**
-[https://rohithmb004-voiceanalysis-app-j4gnxo.streamlit.app/](https://vocalytics-app-j4gnxo.streamlit.app/)
+🔗 Live Streamlit Demo – Accent-Aware Cuisine Recommender
+https://vocalytics-app-j4gnxo.streamlit.app/
 
 ---
 
@@ -86,21 +86,29 @@ source venv/bin/activate     # Mac/Linux
 pip install -r requirements.txt
 ```
 
-Contents of `requirements.txt`:
+### **requirements.txt (with versions)**
 
 ```
-streamlit
-numpy
-joblib
-librosa
-soundfile
-torch
-torchaudio
-transformers
-sentencepiece
-datasets
-scikit-learn
+streamlit==1.39.0
+numpy==1.26.4
+joblib==1.4.2
+librosa==0.10.1
+soundfile==0.12.1
+torch==2.1.2
+torchaudio==2.1.2
+transformers==4.40.1
+sentencepiece==0.2.0
+datasets==2.19.1
+scikit-learn==1.4.1
 ```
+
+These versions are fully compatible with:
+
+* HuBERT (`facebook/hubert-base-ls960`)
+* MFCC extraction
+* SVM classifier
+* Streamlit app
+* HuggingFace datasets
 
 ---
 
