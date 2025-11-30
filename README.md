@@ -1,14 +1,11 @@
----
-
 # 🗣️ Native Language Identification of Indian English Speakers Using HuBERT & MFCCs
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
-![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?logo=pytorch\&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-%23FF4B4B.svg?logo=streamlit\&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?logo=pytorch&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-%23FF4B4B.svg?logo=streamlit&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen.svg)
 
----
 
 ## 🎯 Objective
 
