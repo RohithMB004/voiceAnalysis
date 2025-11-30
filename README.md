@@ -14,7 +14,7 @@
 [https://github.com/RohithMB004/voiceAnalysis](https://github.com/RohithMB004/voiceAnalysis)
 
 🔗 **Live Streamlit Demo (Accent-to-Cuisine Recommender):**
-[https://rohithmb004-voiceanalysis-app-j4gnxo.streamlit.app/](https://rohithmb004-voiceanalysis-app-j4gnxo.streamlit.app/)
+[https://rohithmb004-voiceanalysis-app-j4gnxo.streamlit.app/](https://vocalytics-app-j4gnxo.streamlit.app/)
 
 ---
 
